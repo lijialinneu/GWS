@@ -24,9 +24,7 @@ class CrossPicture(models.Model):
     detail_title = models.CharField(max_length=100,blank=True,null=True)
     like_count = models.IntegerField(default = 0)
     place = models.ForeignKey(Place)#,related_name='place_crosspictures')
+    longitude = models.FloatField(blank = True,null=True)
+    latitude = models.FloatField(blank = True,null=True)
+    altitude = models.FloatField(blank = True,null=True,default = 0.0)
     
-    def save(self,*args, **kwargs):
-        print('save2')
-        return super(CrossPicture,self).save(*args, **kwargs)
-
-
