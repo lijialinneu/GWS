@@ -16,15 +16,18 @@ class Place(models.Model):
 
 
 class CrossPicture(models.Model):
-    title = models.CharField(max_length=100)
-    picture = models.ImageField(upload_to='cross_picture', blank=True)
+    title = models.CharField(max_length = 100)
+    picture = models.ImageField(upload_to = 'cross_picture',blank=True, null=True)
     datetime = models.DateTimeField()
-    time_str = models.CharField(max_length=100)
-    detail_url = models.CharField(max_length=255,blank=True,null=True)
-    detail_title = models.CharField(max_length=100,blank=True,null=True)
-    like_count = models.IntegerField(default = 0)
+    time_str = models.CharField(max_length = 100)
+    detail_url = models.CharField(max_length = 255, blank = True, null = True)
+    detail_title = models.CharField(max_length = 100, blank = True, null = True)
+    like_count = models.IntegerField(default = 0, null = True)
     place = models.ForeignKey(Place)#,related_name='place_crosspictures')
-    longitude = models.FloatField(blank = True,null=True)
-    latitude = models.FloatField(blank = True,null=True)
-    altitude = models.FloatField(blank = True,null=True,default = 0.0)
+    longitude = models.FloatField(blank = True, null = True)
+    latitude = models.FloatField(blank = True, null = True)
+    altitude = models.FloatField(blank = True, null = True, default = 0.0)
+
+    class Meta:
+        ordering = ('datetime',)
     

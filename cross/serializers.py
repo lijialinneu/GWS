@@ -16,5 +16,5 @@ class PlaceSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.Place
 #         fields = ('pk', 'name','cross_pictures')
-        read_only_fields = ('cross_pictures')
+        read_only_fields = ('cross_pictures',)
         
