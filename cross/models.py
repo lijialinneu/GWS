@@ -17,7 +17,7 @@ class Place(models.Model):
     def __str__(self):
         if not self.city:
             print('look up')
-            self.look_up_city()
+            self.city = self.look_up_city(self.latitude,self.longitude)
             self.save()
         if not self.city:
             city = City.objects.get_city('No City Match', city_code=000000)
@@ -29,13 +29,14 @@ class Place(models.Model):
     def cross_pictures(self):
         return self.crosspicture_set.all()
 
-    def look_up_city(self):
+    @staticmethod
+    def look_up_city(latitude,longitude):
         url = ('http://api.map.baidu.com/geocoder/v2/?'
                'ak=IiiPZfBRZ8PIWlMPF2tc4vnWZtxSvWIQ'
                '&coordtype=wgs84ll'
                '&callback=renderReverse&location={},{}'
                '&output=json'
-               '&pois=0').format(self.latitude, self.longitude)
+               '&pois=0').format(latitude, longitude)
         r = requests.request(
             method="get",
             url=url,
@@ -60,11 +61,11 @@ class Place(models.Model):
                     city_name = "NONE_NAME_CITY: {}".format(city_code)
                 city = City.objects.get_city(
                     city_name, city_code, province_name, country_name)
-                self.city = city
+#                 self.city = city
 
             except:
                 pass
-        return dict
+        return city
 
 
 class CrossPicture(models.Model):
