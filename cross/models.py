@@ -69,8 +69,7 @@ class Place(models.Model):
 
 class CrossPicture(models.Model):
     title = models.CharField(max_length=100)
-    picture = models.ImageField(
-        upload_to='cross_picture', blank=True, null=True)
+    picture = models.ImageField(upload_to='cross_picture')
     datetime = models.DateTimeField()
     time_str = models.CharField(max_length=100)
     detail_url = models.CharField(max_length=255, blank=True, null=True)
