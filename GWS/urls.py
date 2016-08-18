@@ -24,4 +24,5 @@ urlpatterns = ([
     url(r'^cross/', include('cross.urls')),
     url(r'^test/', cross.views.test),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url('^$',cross.views.home),
 ]) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

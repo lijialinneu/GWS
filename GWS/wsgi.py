@@ -7,10 +7,11 @@ For more information on this file, see
 https://docs.djangoproject.com/en/1.8/howto/deployment/wsgi/
 """
 
-import os
+import os, sys
 
 from django.core.wsgi import get_wsgi_application
 
 os.environ.setdefault("DJANGO_SETTINGS_MODULE", "GWS.settings")
-
+sys.path.append('\\'.join(os.path.realpath(__file__).split("\\")[:-2])) 
+print('\\'.join(os.path.realpath(__file__).split("\\")[:-2]))
 application = get_wsgi_application()
