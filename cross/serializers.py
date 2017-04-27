@@ -8,7 +8,7 @@ class CitySerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.City
-
+        fields = ('pk',)
 
 class CrossPictureSerializer(serializers.ModelSerializer):
     #     place = PlaceSerializer(read_only=True)
@@ -16,13 +16,14 @@ class CrossPictureSerializer(serializers.ModelSerializer):
     class Meta:
         model = models.CrossPicture
 
+        fields = ('pk', 'title', 'picture','datetime', 'time_str','detail_title','place')
 
 class PlaceSerializer(serializers.ModelSerializer):
     cross_pictures = CrossPictureSerializer(many=True, read_only=True)
     city = CitySerializer(read_only=True)
     class Meta:
         model = models.Place
-#         fields = ('pk', 'name','cross_pictures')
+        fields = ('pk', 'name', 'longitude', 'latitude', 'city', 'cross_pictures')
         read_only_fields = ('cross_pictures',)
 
     def create(self, validated_data, *args, **kwargs):
