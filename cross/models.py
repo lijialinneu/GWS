@@ -82,6 +82,9 @@ class CrossPicture(models.Model):
     latitude = models.FloatField(blank=True, null=True)
     altitude = models.FloatField(blank=True, null=True, default=0.0)
 
+    def __str__(self):
+        return self.title
+
     class Meta:
         ordering = ('datetime',)
 
