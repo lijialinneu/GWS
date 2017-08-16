@@ -15,8 +15,7 @@ class CrossPictureSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = models.CrossPicture
-
-        fields = ('pk', 'title', 'picture','datetime', 'time_str','detail_title','place')
+        fields = ('pk', 'title', 'picture','datetime', 'time_str','detail_title','place', 'longitude', 'latitude')
 
 class PlaceSerializer(serializers.ModelSerializer):
     cross_pictures = CrossPictureSerializer(many=True, read_only=True)
