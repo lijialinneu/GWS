@@ -25,5 +25,6 @@ urlpatterns = ([
     url(r'^test/', cross.views.test),
     url(r'^compress/', cross.views.compressImage),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
+    url(r'^keyword/(.+)/$', cross.views.KeywordSearch),
     url('^$',cross.views.home),
 ]) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

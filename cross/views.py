@@ -26,6 +26,11 @@ def test(request):
     return HttpResponse("OK")
 
 
+def KeywordSearch(request, keyword):
+    result = models.Place.objects.filter(name__contains=keyword)
+    return HttpResponse(result)
+
+
 def compressImage(request):
     picture_list = models.CrossPicture.objects.all()
     for cp in picture_list:
