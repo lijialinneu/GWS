@@ -2,16 +2,30 @@ from django.shortcuts import render_to_response
 from django.http.response import HttpResponse
 from . import models, serializers
 from rest_framework import viewsets, permissions
+from rest_framework.response import Response
 from PIL import Image
 
 def home(request):
     return render_to_response('homepage.html')
+
+def page_not_found(request):
+    return render_to_response('404.html')
 
 
 class PlaceViewSet(viewsets.ModelViewSet):
     queryset = models.Place.objects.all()
     serializer_class = serializers.PlaceSerializer
     permission_classes = [permissions.AllowAny]
+
+    def list(self, request):
+        place_name = request.GET.get('name')
+        if place_name is not None:
+            queryset = models.Place.objects.filter(name__contains=place_name)
+            #permission_classes = [permissions.IsAuthenticatedOrReadOnly]
+        else:
+            queryset = models.Place.objects.all()
+        serializer = serializers.PlaceSerializer(queryset, many=True)
+        return Response(serializer.data)
 
 
 class CrossPictureViewSet(viewsets.ModelViewSet):
@@ -20,15 +34,6 @@ class CrossPictureViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
 #     permission_classes = [IsAccountAdminOrReadOnly]
 
-
-def test(request):
-    pass
-    return HttpResponse("OK")
-
-
-def KeywordSearch(request, keyword):
-    result = models.Place.objects.filter(name__contains=keyword)
-    return HttpResponse(result)
 
 
 def compressImage(request):

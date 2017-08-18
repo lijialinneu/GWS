@@ -26,8 +26,9 @@ SECRET_KEY = 'cap67l6vu)r7n1jmh(#nb_=s8vf_$adbqa*$q!#fh_anm%!0#^'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+# ALLOWED_HOSTS = ['localhost', 'www.dreamera.net','127.0.0.1']
 
+ALLOWED_HOSTS = ['*']
 
 # Application definition
 
@@ -58,7 +59,7 @@ ROOT_URLCONF = 'GWS.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [

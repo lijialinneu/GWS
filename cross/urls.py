@@ -6,5 +6,6 @@ from . import views
 router = DefaultRouter()
 router.register(r'place', views.PlaceViewSet)
 router.register(r'picture', views.CrossPictureViewSet)
+router.register(r'place/(?P<name>.+)/$', views.PlaceViewSet)
 
 urlpatterns = router.urls
