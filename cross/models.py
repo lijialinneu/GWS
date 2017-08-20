@@ -23,7 +23,7 @@ class Place(models.Model):
             city = City.objects.get_city('No City Match', city_code=000000)
             self.city = city
             self.save()
-        return '的'.join([str(self.city), self.name])
+        return '的'.join([str(self.city.province.name + self.city.name), self.name])
 
     @property
     def cross_pictures(self):

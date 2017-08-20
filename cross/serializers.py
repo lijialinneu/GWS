@@ -3,12 +3,18 @@ from rest_framework import serializers
 from . import models
 from rest_framework.exceptions import APIException
 
+class ProvinceSerializer(serializers.ModelSerializer):
+    
+    class Meta:
+        model = models.Province
+        fields = ('pk', 'name',)
+
 
 class CitySerializer(serializers.ModelSerializer):
-
+    province = ProvinceSerializer(read_only=True)
     class Meta:
         model = models.City
-        fields = ('pk',)
+        fields = ('pk','name', 'province',)
 
 class CrossPictureSerializer(serializers.ModelSerializer):
     #     place = PlaceSerializer(read_only=True)

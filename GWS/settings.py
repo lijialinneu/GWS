@@ -24,7 +24,7 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SECRET_KEY = 'cap67l6vu)r7n1jmh(#nb_=s8vf_$adbqa*$q!#fh_anm%!0#^'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 # ALLOWED_HOSTS = ['localhost', 'www.dreamera.net','127.0.0.1']
 
