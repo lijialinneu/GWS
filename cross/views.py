@@ -21,7 +21,6 @@ class PlaceViewSet(viewsets.ModelViewSet):
         place_name = request.GET.get('name')
         if place_name is not None:
             queryset = models.Place.objects.filter(name__contains=place_name)
-            #permission_classes = [permissions.IsAuthenticatedOrReadOnly]
         else:
             queryset = models.Place.objects.all()
         serializer = serializers.PlaceSerializer(queryset, many=True)
