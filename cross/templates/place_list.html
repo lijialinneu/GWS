@@ -1,13 +1,36 @@
 {% extends "base.html" %}
 
+<style type="text/css">
+  #container {
+    width:100%;
+    height:100%;
+  }
+</style>
+
 {% block content %}
     <div class="container">
       {% include "nav_place_list.html" %}  
-      {% for place in place_list %}
-        {{ place.name }}
-      {% empty %}
-      <p>数据为空<p>
-      {% endfor %}
+      <div class="row">
+        <div class="col-md-4">
+          {% for place in place_list %}
+          <p>{{ place.name }}</p>
+          {% empty %}
+          <p>数据为空<p>
+          {% endfor %}
+        </div>
+        <div class="col-md-8">
+          {% include "map.html"%}
+          <iframe class="" unselectable="on" name="container" id="container" src="">
+          </iframe>
+        </div>
+      </div>
     </div>
 {% endblock %}
+<script type="text/javascript"> 
+  var map = new BMap.Map("map");
+  var point = new BMap.Point(116.404, 39.915);
+  map.centerAndZoom(point, 15);
+</script>  
+
+
 
