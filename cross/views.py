@@ -1,5 +1,6 @@
 from django.shortcuts import render_to_response
 from django.http.response import HttpResponse
+from django.views.generic.base import TemplateView
 from . import models, serializers
 from rest_framework import viewsets, permissions
 from rest_framework.response import Response
@@ -54,4 +55,28 @@ def compressImage(request):
         image.save('media/' + str(cp.picture), 'JPEG')
         cp.save()
     return HttpResponse('compress finish')
+
+
+class place_list(TemplateView):
+    template_name = 'place_list.html'
+
+    def get_context_data(self, **kwargs):
+        place_list = models.Place.objects.all()
+        context = {}
+        context['place_list'] = place_list
+        return context
+
+
+class picture_list(TemplateView):
+    template_name = 'picture_list.html'
+
+    def get_context_data(self,  **kwargs):
+        picture_list = models.CrossPicture.objects.all()
+        context = {}
+        context['picture_list'] = picture_list    
+        return context
+
+
+
+
 

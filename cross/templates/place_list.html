@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <div class="container">
+      {% include "nav_place_list.html" %}  
+      {% for place in place_list %}
+        {{ place.name }}
+      {% empty %}
+      <p>数据为空<p>
+      {% endfor %}
+    </div>
+{% endblock %}
+

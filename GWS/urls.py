@@ -23,7 +23,9 @@ import cross
 urlpatterns = ([
     url(r'^admin/', include(admin.site.urls)),
     url(r'^cross/', include('cross.urls')),
-    # url(r'^compress/', cross.views.compressImage),
+    # url(r'^compress/', cross.views.compressImage),i
+    url(r'^place_list/$', cross.views.place_list.as_view()),
+    url(r'^picture_list/$', cross.views.picture_list.as_view()),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url('^$',cross.views.home),
 ]) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

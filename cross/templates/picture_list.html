@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+    <div class="container">
+      {%include "nav_picture_list.html"%}
+      {% for picture in picture_list %}
+        {{ picture }}
+      {% empty %}
+      <p>数据为空</p>
+      {%  endfor %}
+    </div>
+{% endblock %}
+
