@@ -10,10 +10,12 @@
 </style>
 
 <script type="text/javascript">
-  function mapPanTo(id, name) {
+  function mapPanTo(id, name, picture) {
       var point = markers[id-1].getPosition();
       map.centerAndZoom(point, 18);
-      sContent="<h4>" + name + "</h4>";
+      sContent="<div><h4>" + name + "</h4>" + 
+          "<img style='float:right, margin:4px' width='139' height='104' src="+ picture_url + picture +" '>" +
+          "</div>";
       var infoWindow = new BMap.InfoWindow(sContent); 
       map.openInfoWindow(infoWindow, point);      
       
@@ -38,12 +40,15 @@
           <div id="left_list">
             <div class="list-group">
             {% for place in place_list %}
-              <a href="javascript:void(0)" class="list-group-item" onclick="mapPanTo({{forloop.counter}},'{{place.name}}');" >  {{forloop.counter}}  {{place.name}}  </a>
-
+             {% with picture=place.cross_pictures|first %}
+         <a href="#" class="list-group-item" onclick="mapPanTo({{forloop.counter}},'{{place.name}}', '{{picture.picture}}');" > 
+              {{forloop.counter}}  {{place.name}} 
+              </a>
+             {% endwith %}
               <script type="text/javascript">
                   pt = new BMap.Point({{place.longitude}},{{place.latitude}});
                   marker = new BMap.Marker(pt);              
-                  label = new BMap.Label( "{{ place.name }}" , {offset: new BMap.Size(20, -10)});
+                  label = new BMap.Label( "{{ place.name }}" , {offset: new BMap.Size(20, 10)});
                   label.setStyle({maxWidth:"none"});
                   marker.setLabel(label);
                   markers.push(marker);
