@@ -1,14 +1,23 @@
-{% extends "base.html" %}
 
 <style type="text/css">
-  #place_list {
-      border: 1px solid #f90;
+  #left_list {
+      height: 90%;
+      overflow-x: hidden;
+      overflow-y: auto;
   }
-
+  .content {
+      height: 90%;
+  }
+}
 </style>
 
+
+{% extends "base.html" %}
+
+
+
 {% block content %}
-    <div class="container">
+    <div class="container-fluid content">
 
       {% include "nav_place_list.html" %}  
 
@@ -19,18 +28,24 @@
         </div>
         
         <div class="col-md-4 col-md-pull-8">
-          <div id="place_list">
+          <div id="left_list">
+            <ul class="list-group">
           {% for place in place_list %}
-          <p>{{ place.name }} </p>
+          <li class="list-group-item">{{ place.name }} </li>
 
           <script type="text/javascript">
               pt = new BMap.Point({{place.longitude}},{{place.latitude}});
-              markers.push(new BMap.Marker(pt));
+              marker = new BMap.Marker(pt);
+              //label = new BMap.Label({{ place.name }}, {offset:new BMap.Size(20, -10)});
+              //marker.setLabel(label);
+              // marker.setTitle({{place.name}});
+              markers.push(marker);
           </script> 
 
           {% empty %}
           <p>数据为空<p>
           {% endfor %}
+          </ul>
           <script type="text/javascript">
               var markerClusterer = new BMapLib.MarkerClusterer(map, {markers:markers});
           </script>

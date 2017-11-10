@@ -8,10 +8,11 @@
 {% extends "base.html" %}
 
       {% block content %}
-         <div class="container">
+         <div class="container-fluid content">
            {% include "nav.html" %}
            <div class="row">
-            <div class="col-md-6">                               
+            <div class="col-md-2"></div>
+            <div class="col-md-4">                               
               <div class="carousel slide" id="carousel-231811" data-ride="carousel">
                 <ol class="carousel-indicators">
                   <li data-slide-to="0" data-target="#carousel-231811" class="active" ></li>
@@ -31,7 +32,7 @@
                 </div>
               </div>
 	    </div>
-	    <div class="col-md-6" id="picture">
+	    <div class="col-md-4" id="picture">
               <h2>Welcome to Dreamera</h2>
               <h2>拍照后水印建筑物老照片</h2>
 	      <h2>Android v1.0<small>&emsp;浏览器扫码</small></h2>           
@@ -39,6 +40,7 @@
 	      <h2>Android v2.0<small>&emsp;浏览器扫码</small></h2>    
               <img src="/static/new_branch.png" alt="..." class="img-rounded">
 	    </div>	
+            <div class="col-md-2"></div>
 	 </div>
         </div>
       </div>
