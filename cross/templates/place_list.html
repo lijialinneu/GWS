@@ -35,10 +35,10 @@
 
           <script type="text/javascript">
               pt = new BMap.Point({{place.longitude}},{{place.latitude}});
-              marker = new BMap.Marker(pt);
-              //label = new BMap.Label({{ place.name }}, {offset:new BMap.Size(20, -10)});
-              //marker.setLabel(label);
-              // marker.setTitle({{place.name}});
+              marker = new BMap.Marker(pt);              
+              label = new BMap.Label( "{{ place.name }}" , {offset: new BMap.Size(20, -10)});
+              label.setStyle({maxWidth:"none"});
+              marker.setLabel(label);
               markers.push(marker);
           </script> 
 
