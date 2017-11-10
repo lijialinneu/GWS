@@ -6,11 +6,8 @@
 </style>  
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=7TRXOG1TMCFqiMtlEndHbt4iRXp2rD5z">
 </script>
-
 <script type="text/javascript" src="http://api.map.baidu.com/library/TextIconOverlay/1.2/src/TextIconOverlay_min.js">
 </script>
-<!--script type="text/javascript" src="http://api.map.baidu.com/library/MarkerClusterer/1.2/src/MarkerClusterer_min.js"></script-->
-
 <script type="text/javascript" src="/static/bootstrap/js/MarkerClusterer_min.js"></script>
 
 <div id="container"></div> 
@@ -18,7 +15,12 @@
 <script type="text/javascript"> 
   var map = new BMap.Map("container");
   map.enableScrollWheelZoom(true);
-  
+
+  var control = new BMap.ScaleControl({anchor: BMAP_ANCHOR_BOTTOM_RIGHT});
+  var navigation = new BMap.NavigationControl({anchor: BMAP_ANCHOR_BOTTOM_RIGHT}); 
+  map.addControl(control);        
+  map.addControl(navigation);  
+
   function locate(result){
     var cityName = result.name;
     map.centerAndZoom(cityName, 12);
@@ -26,10 +28,11 @@
   var myCity = new BMap.LocalCity();
   myCity.get(locate);
 
-
   var markers = [];
   var pt = null;
   var marker = null;
   var label = null;
+  var sContent = null;
+
 </script>  
 
