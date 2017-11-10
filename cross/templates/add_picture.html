@@ -1,0 +1,59 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container-fluid content">
+
+    {% include "nav_add_picture.html" %}  
+  
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8">
+	<form>
+          <div class="form-group">
+            <label for="Title">Picture Title</label>
+            <input type="text" class="form-control" id="Title" placeholder="Picture Title">
+          </div>        
+          <div class="form-group">
+            <label for="Picture">Picture</label>
+            <input type="file" id="Picture">
+          </div>
+          <div class="form-group">
+            <label for="Datetime">Datetime</label>
+            <input type="date" class="form-control" id="Datetime" placeholder="Datetime">
+          </div>
+          <div class="form-group">          
+            <label for="Timestr">Time str</label>
+            <input type="text" class="form-control" id="Timestr" placeholder="Time str">
+          </div>
+          <div class="form-group">          
+            <label for="Detail_title">Detail title</label>
+            <input type="text" class="form-control" id="Detail_title" placeholder="Detail title">
+          </div>
+          <div class="form-group">          
+            <label for="Place">Place</label>
+            <input type="text" class="form-control" id="Place" placeholder="Place">
+          </div>
+          <div class="form-group">          
+            <label for="Longitude">Longitude</label>
+            <input type="text" class="form-control" id="Longitude" placeholder="Longitude">
+          </div>
+          <div class="form-group">          
+            <label for="Latitude">Latitude</label>
+            <input type="text" class="form-control" id="Latitude" placeholder="Latitude">
+          </div>
+
+          
+          <button type="submit" class="btn btn-default">Submit</button>
+        </form>	
+      </div>
+        
+      <div class="col-md-2"></div>
+    </div>
+  </div>
+</div>
+{% endblock %}
+
+
+
+
