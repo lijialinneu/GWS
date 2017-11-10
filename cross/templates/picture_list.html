@@ -4,11 +4,30 @@
 
     <div class="container-fluid">
       {%include "nav_picture_list.html"%}
+
+      <div class="row">
+
       {% for picture in picture_list %}
-        {{ picture }}
-      {% empty %}
-      <p>数据为空</p>
-      {%  endfor %}
+	   <div class="col-sm-8 col-md-4 col-lg-3">	      
+             <center>
+	      <div class="caption">
+	        {% if picture.picture %}
+                  
+		<img src="../../media/{{picture.picture}}" class="img-rounded" style="width:360px;height:270px;">
+		{% else %}
+		  <img src="" alt="...">
+		{% endif %}
+		<p>{{ picture }}</p>    
+	      </div>
+            </center>
+	  </div>
+	  {% empty %}
+	    <p>数据为空</p>
+      {% endfor %}
+
+
+      </div>
+
     </div>
 {% endblock %}
 
