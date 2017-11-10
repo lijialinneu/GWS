@@ -1,5 +1,11 @@
 {% extends "base.html" %}
 
+<style type="text/css">
+  #place_list {
+      border: 1px solid #f90;
+  }
+
+</style>
 
 {% block content %}
     <div class="container">
@@ -11,17 +17,24 @@
         <div class="col-md-8 col-md-push-4">
           {% include "map.html" %}
         </div>
-
-<script type="text/javascript"> 
-  var marker = new BMap.Marker(new BMap.Point(116.404, 39.915));
-  map.addOverlay(marker);
-</script>  
+        
         <div class="col-md-4 col-md-pull-8">
+          <div id="place_list">
           {% for place in place_list %}
-          <p>{{ place.name }}</p>
+          <p>{{ place.name }} </p>
+
+          <script type="text/javascript">
+              pt = new BMap.Point({{place.longitude}},{{place.latitude}});
+              markers.push(new BMap.Marker(pt));
+          </script> 
+
           {% empty %}
           <p>数据为空<p>
           {% endfor %}
+          <script type="text/javascript">
+              var markerClusterer = new BMapLib.MarkerClusterer(map, {markers:markers});
+          </script>
+          </div>
         </div>
       </div>
     </div>
