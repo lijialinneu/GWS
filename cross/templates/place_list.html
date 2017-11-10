@@ -1,36 +1,34 @@
 {% extends "base.html" %}
 
-<style type="text/css">
-  #container {
-    width:100%;
-    height:100%;
-  }
-</style>
 
 {% block content %}
     <div class="container">
+
       {% include "nav_place_list.html" %}  
+
       <div class="row">
-        <div class="col-md-4">
+
+        <div class="col-md-8 col-md-push-4">
+          {% include "map.html" %}
+        </div>
+
+<script type="text/javascript"> 
+  var marker = new BMap.Marker(new BMap.Point(116.404, 39.915));
+  map.addOverlay(marker);
+</script>  
+        <div class="col-md-4 col-md-pull-8">
           {% for place in place_list %}
           <p>{{ place.name }}</p>
           {% empty %}
           <p>数据为空<p>
           {% endfor %}
         </div>
-        <div class="col-md-8">
-          {% include "map.html"%}
-          <iframe class="" unselectable="on" name="container" id="container" src="">
-          </iframe>
-        </div>
       </div>
     </div>
 {% endblock %}
-<script type="text/javascript"> 
-  var map = new BMap.Map("map");
-  var point = new BMap.Point(116.404, 39.915);
-  map.centerAndZoom(point, 15);
-</script>  
+
+
+
 
 
 
