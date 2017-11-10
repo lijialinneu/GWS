@@ -6,8 +6,10 @@ from rest_framework import viewsets, permissions
 from rest_framework.response import Response
 from PIL import Image
 
+
 def home(request):
     return render_to_response('homepage.html')
+
 
 def page_not_found(request):
     return render_to_response('404.html')
@@ -33,7 +35,6 @@ class CrossPictureViewSet(viewsets.ModelViewSet):
     serializer_class = serializers.CrossPictureSerializer
     permission_classes = [permissions.AllowAny]
 #     permission_classes = [IsAccountAdminOrReadOnly]
-
 
 
 def compressImage(request):
@@ -74,6 +75,24 @@ class picture_list(TemplateView):
         picture_list = models.CrossPicture.objects.all()
         context = {}
         context['picture_list'] = picture_list    
+        return context
+
+
+class add_place(TemplateView):
+    template_name='add_place.html'
+
+    def get_context_data(self, **kwargs):        
+        context = {}
+        context['result'] = '200'
+        return context
+
+
+class add_picture(TemplateView):
+    template_name='add_picture.html'
+
+    def get_context_data(self, **kwargs):        
+        context = {}
+        context['result'] = '200'
         return context
 
 
