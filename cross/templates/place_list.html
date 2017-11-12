@@ -17,6 +17,16 @@
       map.openInfoWindow(infoWindow, point);      
       
   }
+
+  function search() {
+      if(!$("#name").val()) {
+          alert("Place Name 不能为空");
+          $("#name").css("border-color", "#f90");
+      }else {
+          $("#name").css("border-color", "");
+          $("#form").submit();
+      }
+  }
 </script>
 
 {% extends "base.html" %}
@@ -34,6 +44,15 @@
         </div>
         
         <div class="col-md-4 col-md-pull-8">
+          <form id="form" method="get" action="../place_list/">
+            <div class="input-group">
+              <input type="text" name="name" id="name" class="form-control" placeholder="Search by name...">
+              <span class="input-group-btn">
+                <button class="btn btn-default" type="button" onclick="search()">Search</button>
+              </span>
+            </div>
+          </form>
+          <p></p> 
           <div id="left_list">
             <div class="list-group">
             {% for place in place_list %}
