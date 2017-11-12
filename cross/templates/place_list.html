@@ -12,7 +12,7 @@
       map.centerAndZoom(point, 18);
       sContent="<div><h4>" + name + "</h4>" + 
           "<img style='float:right, margin:4px' width='139' height='104' src="+ picture_url + picture +" '>" +
-          "</div>";
+          "<p><a href='#'>查看更多</a></p></div>";
       var infoWindow = new BMap.InfoWindow(sContent); 
       map.openInfoWindow(infoWindow, point);      
       

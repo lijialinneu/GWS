@@ -101,11 +101,34 @@ class add_place(TemplateView):
 class add_picture(TemplateView):
     template_name='add_picture.html'
 
+    
+    def get(self, request, *args, **kwargs):
+        title = request.GET.get("title")
+        picture = request.GET.get("picture")
+        datetime = request.GET.get("datetime")
+        time_str = request.GET.get("time_str")
+        detail_title = request.GET.get("detail_title")
+        place = request.GET.get("place")
+        longitude = request.GET.get("longitude")
+        latitude = request.GET.get("latitude")
+        
+        if title and picture and datetime and time_str and place: 
+            picture = models.CrossPicture.objects.create(
+                title=title, picture=picture, datetime=datetime, 
+                time_str=time_str, detail_title=detail_title,
+                place=place, longitude=longitude, latitude=latitude)
+       
+        context = {}
+        context['result'] = picture            
+        return self.render_to_response(context)
+    
+
+    """
     def get_context_data(self, **kwargs):        
         context = {}
         context['result'] = '200'
         return context
-
+    """
 
 
 
