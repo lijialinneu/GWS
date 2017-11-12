@@ -85,10 +85,17 @@ class picture_list(TemplateView):
 class add_place(TemplateView):
     template_name='add_place.html'
 
-    def get_context_data(self, **kwargs):        
+    def get(self, request, *args, **kwargs):
+        name = request.GET.get("name")
+        lng = request.GET.get("longitude")
+        lat = request.GET.get("latitude")    
+        place = None
+        if name and lng and lat:            
+            place = models.Place.objects.create(name=name, longitude=lng, latitude=lat)        
+        
         context = {}
-        context['result'] = '200'
-        return context
+        context['result'] = place
+        return self.render_to_response(context)
 
 
 class add_picture(TemplateView):

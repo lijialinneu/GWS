@@ -1,3 +1,27 @@
+<script type="text/javascript">
+    function add() {
+        if(!$("#name").val()) {
+            alert("Place Name 不能为空");
+            $("#name").css("border-color", "#f90");
+        }else {
+            $("#name").css("border-color", "");
+                        
+            if(!$("#longitude").val() || !$("#latitude").val()) {
+                alert("经纬度不能为空");
+                $("#longitude").css("border-color", "#f90");
+                $("#latitude").css("border-color", "#f90");           
+                 
+            }else {
+                $("#longitude").css("border-color", "");
+                $("#latitude").css("border-color", "");            
+                $("#form").submit();
+            }             
+        }
+
+
+    }
+</script>
+
 
 {% extends "base.html" %}
 
@@ -8,23 +32,26 @@
   
     <div class="row">
       <div class="col-md-6">
-	<form>
+	<form id="form" method="get" action="../add_place/">
           <div class="form-group">
-            <label for="Name">Place Name</label>
-            <input type="text" class="form-control" id="Name" placeholder="Place Name">
+            <label for="name">Place Name</label>
+            <input type="text" class="form-control" id="name" name="name" placeholder="Place Name">
           </div>
           <p class="help-block"> 点击地图，确定经纬度</p>
           <div class="form-group">
-            <label for="Longitude">Longitude</label>
-            <input type="text" class="form-control" id="Longitude" placeholder="Longitude" readonly>
+            <label for="longitude">Longitude</label>
+            <input type="text" class="form-control" id="longitude" name="longitude" placeholder="Longitude" readonly>
           </div>
           <div class="form-group">
-            <label for="Latitude">Latitude</label>
-            <input type="text" class="form-control" id="Latitude" placeholder="Latitude" readonly>
+            <label for="latitude">Latitude</label>
+            <input type="text" class="form-control" id="latitude" name="latitude" placeholder="Latitude" readonly>
           </div>
   
-          <button type="submit" class="btn btn-default">Submit</button>
-        </form>	
+          <button type="submit" class="btn btn-default" onclick="add()">Submit</button>
+        </form>
+        {% if result %}
+           <p>刚刚成功添加了 {{ result }}</p>
+        {% endif%}	
       </div>
         
       <div class="col-md-6">
@@ -32,12 +59,11 @@
         
         <script type="text/javascript">
           function addMarker(e) {
-            map.clearOverlays();
-            var marker = new BMap.Marker(e.point);
-            map.addOverlay(marker);   
-            $('#Longitude').val(e.point.lng);
-            $('#Latitude').val(e.point.lat);
-            
+             map.clearOverlays();
+             var marker = new BMap.Marker(e.point);
+             map.addOverlay(marker);   
+             $('#longitude').val(e.point.lng);
+             $('#latitude').val(e.point.lat);            
           }
           map.addEventListener("click", addMarker);
         </script>
