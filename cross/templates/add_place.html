@@ -16,11 +16,11 @@
           <p class="help-block"> 点击地图，确定经纬度</p>
           <div class="form-group">
             <label for="Longitude">Longitude</label>
-            <input type="text" class="form-control" id="Latitude" placeholder="Longitude">
+            <input type="text" class="form-control" id="Longitude" placeholder="Longitude" readonly>
           </div>
           <div class="form-group">
             <label for="Latitude">Latitude</label>
-            <input type="text" class="form-control" id="Latitude" placeholder="Latitude">
+            <input type="text" class="form-control" id="Latitude" placeholder="Latitude" readonly>
           </div>
   
           <button type="submit" class="btn btn-default">Submit</button>
@@ -29,11 +29,24 @@
         
       <div class="col-md-6">
         {% include "map.html" %}
+        
+        <script type="text/javascript">
+          function addMarker(e) {
+            map.clearOverlays();
+            var marker = new BMap.Marker(e.point);
+            map.addOverlay(marker);   
+            $('#Longitude').val(e.point.lng);
+            $('#Latitude').val(e.point.lat);
+            
+          }
+          map.addEventListener("click", addMarker);
+        </script>
       </div>
     </div>
   </div>
 </div>
 {% endblock %}
+
 
 
 
