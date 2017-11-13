@@ -135,7 +135,9 @@ class similar_pictures(TemplateView):
     template_name = 'similar_pictures.html'
     
     def get(self, request, *args, **kwargs):
-        input_picture = request.GET.get("picture")
+        # input_picture = request.FILES.get("picture")
+        # print(input_picture) 
+        input_picture = None
         similar_list = []
         if input_picture:      
             picture_list = models.CrossPicture.objects.all()            
@@ -153,14 +155,16 @@ class similar_pictures(TemplateView):
         return self.render_to_response(context)
 
     def similar(self, input_picture, picture):
-        return random.uniform(0, 100)
-        '''
+        # return random.uniform(0, 100)
+        
         image1 = np.array(Image.open(input_picture).convert('L'))
-        image2 = np.array(Image.open(picture).convert('L'))
+        image2 = np.array(Image.open(picture.picture).convert('L'))
         h1 = self.p_hash(mat1)
         h2 = self.p_hash(mat2)
+        print(h1)
+        print(h2)
         return self.hamming(h1, h2)
-        '''
+        
 
     def p_hash(self, src):        
         src.thumbnail((8,8), Image.ANTIALIAS)
@@ -173,4 +177,11 @@ class similar_pictures(TemplateView):
             result += ''.join('%x' % int(string[i: i + 4], 2))
         return result
         
-    
+    def hamming(str1, str2):
+        if len(str1) != len(str2):
+            return
+        count = 0
+        for i in range(0, len(str1)):
+            if str1[i] != str2[i]:
+                count += 1
+        return count 

@@ -1,0 +1,67 @@
+<!--script type="text/javascript">
+    function search() {
+        if(!$("#picture").val()) {
+            alert("未选择图片");
+        }else {
+            $("#form").submit();
+        }
+    }
+
+</script-->
+
+
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container-fluid content">
+
+    {% include "nav_similar_pictures.html" %}  
+  
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8">
+	<!--form id="form" method="get" action="../similar_pictures/">
+          <div class="form-group">
+            <label for="picture">Input Picture</label>
+            <input type="file" id="picture" name="picture">
+          </div>
+          <button type="submit" class="btn btn-default" onclick="search()">Submit</button>
+        </form-->
+        <h3>测试图片</h3>
+        <img src="http://www.dreamera.net:8080/media/cross_picture/%E4%B8%9C%E6%B4%8B%E6%8B%93%E6%AE%96%E6%A0%AA%E5%BC%8F%E4%BC%9A%E7%A4%BE%E5%A5%89%E5%A4%A9%E6%94%AF%E5%BA%97%E6%97%A7%E5%9D%803.jpg"></img>	
+      </div>
+        
+      <div class="col-md-2"></div>
+    </div>
+
+    <div class="row">
+      <div class="col-md-2"></div>
+      <div class="col-md-8">
+        <div class="list-group">
+            {% for p in similar_list %}
+              <div class="row">
+                <div class="col-md-8">
+                  {% with image=p|first %}
+                  <img width='400' height='300' src="http://www.dreamera.net:8080/media/{{image.picture}}"></img>
+                  {% endwith %}
+                </div>
+                <div class="col-md-4">
+                  <h3>相似度{{p|last}} </h3>
+                </div>
+               </div>
+            {% empty %}
+            <p>暂时没有数据哦</p> 
+            {% endfor %}   
+            <div class="row"><center><h3>没有更多数据了</h3></center></div>
+        </div>
+      </div> 
+      <div class="col-md-2"></div>
+    </div>
+
+  </div>
+</div>
+{% endblock %}
+
+
+
+
