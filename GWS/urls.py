@@ -28,6 +28,7 @@ urlpatterns = ([
     url(r'^picture_list/$', cross.views.picture_list.as_view()),
     url(r'^add_place/$', cross.views.add_place.as_view()),
     url(r'^add_picture/$', cross.views.add_picture.as_view()),
+    url(r'^similar_pictures/$', cross.views.similar_pictures.as_view()),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url('^$',cross.views.home),
 ]) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

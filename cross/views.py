@@ -5,7 +5,8 @@ from . import models, serializers
 from rest_framework import viewsets, permissions
 from rest_framework.response import Response
 from PIL import Image
-
+import random
+import numpy as np
 
 def home(request):
     return render_to_response('homepage.html')
@@ -83,7 +84,7 @@ class picture_list(TemplateView):
 
 
 class add_place(TemplateView):
-    template_name='add_place.html'
+    template_name = 'add_place.html'
 
     def get(self, request, *args, **kwargs):
         name = request.GET.get("name")
@@ -99,8 +100,7 @@ class add_place(TemplateView):
 
 
 class add_picture(TemplateView):
-    template_name='add_picture.html'
-
+    template_name = 'add_picture.html'
     
     def get(self, request, *args, **kwargs):
         title = request.GET.get("title")
@@ -131,5 +131,46 @@ class add_picture(TemplateView):
     """
 
 
+class similar_pictures(TemplateView):
+    template_name = 'similar_pictures.html'
+    
+    def get(self, request, *args, **kwargs):
+        input_picture = request.GET.get("picture")
+        similar_list = []
+        if input_picture:      
+            picture_list = models.CrossPicture.objects.all()            
+            num = 0
+            th = 30 # threshold
+            for picture in picture_list:
+                if num >= 20:
+                    break
+                num += 1
+                similar = self.similar(input_picture, picture)
+                if similar < th :
+                    similar_list.append([picture, similar])
+        context = {}
+        context['similar_list'] = similar_list
+        return self.render_to_response(context)
 
+    def similar(self, input_picture, picture):
+        return random.uniform(0, 100)
+        '''
+        image1 = np.array(Image.open(input_picture).convert('L'))
+        image2 = np.array(Image.open(picture).convert('L'))
+        h1 = self.p_hash(mat1)
+        h2 = self.p_hash(mat2)
+        return self.hamming(h1, h2)
+        '''
 
+    def p_hash(self, src):        
+        src.thumbnail((8,8), Image.ANTIALIAS)
+        avg = sum([sum(src[i]) for i in range(8)]) / 64
+        string = ''
+        for i in range(8):
+            string += ''.join(map(lambda i: '0' if i < avg else '1', src[i]))    
+        result = ''
+        for i in range(0, 64, 4):
+            result += ''.join('%x' % int(string[i: i + 4], 2))
+        return result
+        
+    
