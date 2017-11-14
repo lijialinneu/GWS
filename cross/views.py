@@ -185,3 +185,16 @@ class similar_pictures(TemplateView):
             if str1[i] != str2[i]:
                 count += 1
         return count 
+
+
+
+class place_show(TemplateView):
+    template_name = 'place_show.html'
+
+    def get(self, request, id, *args, **kwargs):
+        place = models.Place.objects.get(id=id)
+        context = {}
+        context['place'] = place  
+        return self.render_to_response(context)
+
+

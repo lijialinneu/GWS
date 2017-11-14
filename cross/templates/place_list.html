@@ -7,12 +7,12 @@
 </style>
 
 <script type="text/javascript">
-  function mapPanTo(id, name, picture) {
-      var point = markers[id-1].getPosition();
+  function mapPanTo(id, index, name, picture) {
+      var point = markers[index-1].getPosition();
       map.centerAndZoom(point, 18);
       sContent="<div><h4>" + name + "</h4>" + 
           "<img style='float:right, margin:4px' width='139' height='104' src="+ picture_url + picture +" '>" +
-          "<p><a href='#'>查看更多</a></p></div>";
+          "<p><a href='../place_show/" + id + "/' target='_blank'>查看更多</a></p></div>";
       var infoWindow = new BMap.InfoWindow(sContent); 
       map.openInfoWindow(infoWindow, point);      
       
@@ -57,7 +57,7 @@
             <div class="list-group">
             {% for place in place_list %}
              {% with picture=place.cross_pictures|first %}
-         <a href="#" class="list-group-item" onclick="mapPanTo({{forloop.counter}},'{{place.name}}', '{{picture.picture}}');" > 
+         <a href="#" class="list-group-item" onclick="mapPanTo({{place.id}}, {{forloop.counter}},'{{place.name}}', '{{picture.picture}}');" > 
               {{forloop.counter}}  {{place.name}} 
               </a>
              
@@ -68,7 +68,7 @@
                   label.setStyle({maxWidth:"none"});
                   marker.setLabel(label);
                   marker.addEventListener("click", function(){
-                      mapPanTo({{forloop.counter}},"{{place.name}}", "{{picture.picture}}");
+                      mapPanTo({{place.id}}, {{forloop.counter}},"{{place.name}}", "{{picture.picture}}");
                   });
                   markers.push(marker);
               </script> 
