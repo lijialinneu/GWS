@@ -60,16 +60,19 @@
          <a href="#" class="list-group-item" onclick="mapPanTo({{forloop.counter}},'{{place.name}}', '{{picture.picture}}');" > 
               {{forloop.counter}}  {{place.name}} 
               </a>
-             {% endwith %}
+             
               <script type="text/javascript">
                   pt = new BMap.Point({{place.longitude}},{{place.latitude}});
                   marker = new BMap.Marker(pt);              
                   label = new BMap.Label( "{{ place.name }}" , {offset: new BMap.Size(20, 10)});
                   label.setStyle({maxWidth:"none"});
                   marker.setLabel(label);
+                  marker.addEventListener("click", function(){
+                      mapPanTo({{forloop.counter}},"{{place.name}}", "{{picture.picture}}");
+                  });
                   markers.push(marker);
               </script> 
-
+              {% endwith %}
             {% empty %}
             <p>数据为空<p>
             {% endfor %}
