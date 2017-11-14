@@ -1,0 +1,38 @@
+
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container-fluid content">
+
+    {% include "nav_place_list.html" %}  
+  
+    <div class="row">
+       <center>  <h3> {{ place.name }}</h3> </center>
+    </div>
+    <p></p>
+    <div class="row">
+      {% with picture_list=place.cross_pictures %}
+        {% for picture in picture_list %}
+          <div class="col-sm-8 col-md-4 col-lg-3">
+            <center>
+              <div class="caption">
+                {% if picture %}
+                  <img style="width:360px;height:270px;" src="../../media/{{picture.picture}}"></img>
+                {% endif %}
+                <p>{{ picture }}</p>
+              </div>
+            </center>
+          </div>
+          {% empty %}
+          <center><h3><small>暂时没有数据哦</small> </h3>
+          {% endfor %}    
+        {% endwith %} 
+    </div>
+
+  </div>
+</div>
+<p></p>
+{% endblock %}
+
+
+

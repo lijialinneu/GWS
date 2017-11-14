@@ -74,7 +74,7 @@
               </script> 
               {% endwith %}
             {% empty %}
-            <p>数据为空<p>
+            <center> <h3><small>数据为空</small></h3></center>
             {% endfor %}
             <script type="text/javascript">
                 var markerClusterer = new BMapLib.MarkerClusterer(map, {markers:markers});
@@ -84,6 +84,7 @@
       </div>
     </div>
 </div>
+<p></p>
 {% endblock %}
 
 
