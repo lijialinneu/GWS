@@ -1,7 +1,7 @@
 <style type="text/css">  
   #container {
     width:100%;
-    height:800px;
+    height:1000px;
   }  
 </style>  
 <script type="text/javascript" src="http://api.map.baidu.com/api?v=2.0&ak=7TRXOG1TMCFqiMtlEndHbt4iRXp2rD5z">
@@ -20,6 +20,7 @@
   var navigation = new BMap.NavigationControl({anchor: BMAP_ANCHOR_BOTTOM_RIGHT}); 
   map.addControl(control);        
   map.addControl(navigation);  
+  map.setMapStyle({style:'grayscale'});  
 
   function locate(result){
     var cityName = result.name;
