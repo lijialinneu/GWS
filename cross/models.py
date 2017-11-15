@@ -8,7 +8,7 @@ from difflib import Match
 
 
 class Place(models.Model):
-    name = models.CharField(max_length=100)
+    name = models.CharField(max_length=100, db_index=True)
     longitude = models.FloatField()
     latitude = models.FloatField()
     altitude = models.FloatField(default=0.0)

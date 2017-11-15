@@ -143,6 +143,9 @@ CACHES = {
     'default': {
         'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
         'LOCATION': '/var/tmp/django_cache',
+        'OPTIONS': {
+            'MAX_ENTRIES': 100
+        }
      }
 }
 
@@ -153,4 +156,4 @@ CACHE_TTL = 60 * 60
 MIDDLEWARE = [
   'django.middleware.cache.UpdateCacheMiddleware',
   'django.middleware.cache.FetchFromCacheMiddleware',
- ]
+]

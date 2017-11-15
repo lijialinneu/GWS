@@ -26,7 +26,7 @@ urlpatterns = ([
     url(r'^admin/', include(admin.site.urls)),
     url(r'^cross/', include('cross.urls')),
     # url(r'^compress/', cross.views.compressImage),i
-    url(r'^place_list/$', cross.views.place_list.as_view()),
+    url(r'^place_list/$', cache_page(CACHE_TTL)(cross.views.place_list.as_view())),
     url(r'^picture_list/$', cache_page(CACHE_TTL)(cross.views.picture_list.as_view())),
     url(r'^add_place/$', cross.views.add_place.as_view()),
     url(r'^add_picture/$', cross.views.add_picture.as_view()),
