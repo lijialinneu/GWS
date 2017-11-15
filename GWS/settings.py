@@ -125,3 +125,32 @@ STATICFILES_DIRS = (
 MEDIA_URL = '/media/'
 
 MEDIA_ROOT = os.path.join(BASE_DIR, "media") 
+
+# Redis cache
+"""
+CACHES = {
+    'default': {
+        'BACKEND': 'django_redis.cache.RedisCache',
+        'LOCATION': '127.0.0.1:6379',
+        "OPTIONS": {
+            "CLIENT_CLASS": "django_redis.client.DefaultClient",
+        },
+    },
+}
+"""
+
+CACHES = {
+    'default': {
+        'BACKEND': 'django.core.cache.backends.filebased.FileBasedCache',
+        'LOCATION': '/var/tmp/django_cache',
+     }
+}
+
+
+CACHE_TTL = 60 * 60
+
+
+MIDDLEWARE = [
+  'django.middleware.cache.UpdateCacheMiddleware',
+  'django.middleware.cache.FetchFromCacheMiddleware',
+ ]

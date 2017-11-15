@@ -8,6 +8,13 @@ from PIL import Image
 import random
 import numpy as np
 
+#from django.conf import settings
+#from django.views.decorators.cache import cache_page
+
+#CACHE_TTL = getattr(settings, 'CACHE_TTL')
+
+
+
 def home(request):
     return render_to_response('homepage.html')
 
@@ -73,9 +80,10 @@ class place_list(TemplateView):
         return self.render_to_response(context)
 
 
+
 class picture_list(TemplateView):
     template_name = 'picture_list.html'
-
+ 
     def get_context_data(self,  **kwargs):        
         picture_list = models.CrossPicture.objects.all()
         context = {}
