@@ -150,7 +150,7 @@ CACHES = {
 }
 
 
-CACHE_TTL = 60 * 60
+CACHE_TTL = 60 * 15
 
 
 MIDDLEWARE = [

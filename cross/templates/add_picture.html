@@ -1,27 +1,24 @@
 <script type="text/javascript">
 
     function add() {
-        
-        if($("#title").val()){            
+        if(!$("#title").val()){            
             $("#title").css("border-color", "#f90");
-        }
-
-        if($("#picture").val()) {
+            alert("Picture Title 不能为空");
+        }else if(!$("#picture").val()) {
             $("#picture").css("border-color", "#f90");
-        }
-
-        if($("#datetime").val()) {
+            alert("Picture 不能为空，你要选择一个图片文件");
+        }else if(!$("#datetime").val()) {
             $("#datetime").css("border-color", "#f90");
-        }
-
-        if($("#timestr").val()) {
+            alert("Datetime 不能为空");
+        }else if(!$("#timestr").val()) {
             $("#timestr").css("border-color", "#f90");
-        }
-
-        if($("#place").val()) {
+            alert("Place 不能为空");
+        }else if(!$("#place").val()) {
             $("#place").css("border-color", "#f90");
+            alert("Picture Title 不能为空");
+        }else {            
+            $("#form").submit();
         }
-
     }
 
 </script>
@@ -37,14 +34,14 @@
     <div class="row">
       <div class="col-md-2"></div>
       <div class="col-md-8">
-	<form id="form" method="get" action="../add_picture/">
+	<form id="form" method="post" action="../add_picture/" enctype="multipart/form-data">
           <div class="form-group">
             <label for="title">Picture Title</label>
             <input type="text" class="form-control" id="title" name="title" placeholder="Picture Title">
           </div>        
           <div class="form-group">
             <label for="picture">Picture</label>
-            <input type="file" id="picture" name="picture">
+            <input type="file" accept="image/*" id="picture" name="picture">
           </div>
           <div class="form-group">
             <label for="datetime">Datetime</label>
@@ -52,15 +49,24 @@
           </div>
           <div class="form-group">          
             <label for="timestr">Time str</label>
-            <input type="text" class="form-control" id="timestr" name="timestr" placeholder="Time str">
+            <input type="text" class="form-control" id="timestr" name="time_str" placeholder="Time str">
           </div>
           <div class="form-group">          
             <label for="detail_title">Detail title</label>
             <input type="text" class="form-control" id="detail_title" name="detail_title" placeholder="Detail title">
-          </div>
+          </div>         
           <div class="form-group">          
             <label for="place">Place</label>
-            <input type="text" class="form-control" id="place" name="place" placeholder="Place">
+            <select class="form-control" id="place" name="place">
+                {% for place in place_list %}
+                  <script type="text/javascript">
+                    var option = "<option value='{{place.id}}'>{{place.name}}</option>";
+                    $("#place").append(option);
+                  </script>
+                {% empty %}
+                <option value=''>null</option>
+                {% endfor %}
+            </select>
           </div>
           <div class="form-group">          
             <label for="longitude">Longitude</label>
@@ -71,7 +77,10 @@
             <input type="text" class="form-control" id="latitude" name="latitude" placeholder="Latitude">
           </div>          
           <button type="submit" class="btn btn-default" onclick="add()">Submit</button>
-        </form>	
+        </form>
+       {% if result %}
+         {{ result }}	
+       {% endif %}
       </div>
         
       <div class="col-md-2"></div>

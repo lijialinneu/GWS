@@ -8,6 +8,10 @@ from django.views.decorators.csrf import csrf_exempt
 from PIL import Image
 import numpy as np
 
+from django.views.decorators.cache import cache_page
+#from django.conf import settings
+
+#CACHE_TTL = getattr(settings, 'CACHE_TTL')
 
 
 def home(request):
@@ -100,30 +104,52 @@ class add_place(TemplateView):
         context['result'] = place
         return self.render_to_response(context)
 
-
 class add_picture(TemplateView):
+
     template_name = 'add_picture.html'
     
+    """
     def get(self, request, *args, **kwargs):
-        title = request.GET.get("title")
-        picture = request.GET.get("picture")
-        datetime = request.GET.get("datetime")
-        time_str = request.GET.get("time_str")
-        detail_title = request.GET.get("detail_title")
-        place = request.GET.get("place")
-        longitude = request.GET.get("longitude")
-        latitude = request.GET.get("latitude")
-        
-        if title and picture and datetime and time_str and place: 
-            picture = models.CrossPicture.objects.create(
-                title=title, picture=picture, datetime=datetime, 
-                time_str=time_str, detail_title=detail_title,
-                place=place, longitude=longitude, latitude=latitude)
-       
+        place_list = models.Place.objects.all()
         context = {}
-        context['result'] = picture            
+        context['place_list'] = place_list
         return self.render_to_response(context)
-    
+    """
+
+    @csrf_exempt
+    def dispatch(self, request, *args, **kwargs):
+        if request.method == "POST":            
+            title = request.POST.get("title")
+            picture = request.FILES.get("picture")
+            datetime = request.POST.get("datetime")
+            time_str = request.POST.get("time_str")
+            detail_title = request.POST.get("detail_title")
+            place_id = request.POST.get("place")
+            longitude = request.POST.get("longitude")
+            latitude = request.POST.get("latitude")
+
+            place = models.Place.objects.get(id=place_id)   
+            if not longitude:
+                longitude = place.longitude
+            if not latitude:
+                latitude = place.latitude
+
+            picture = models.CrossPicture(title=title, 
+                            picture=picture, 
+                            datetime=datetime, 
+                            time_str=time_str, 
+                            detail_title=detail_title, 
+                            place=place, 
+                            longitude=longitude, 
+                            latitude=latitude)
+            picture.save()            
+            return HttpResponse("添加成功")
+        elif request.method == "GET":
+            place_list = models.Place.objects.all()
+            context = {}
+            context['place_list'] = place_list
+            return self.render_to_response(context) 
+ 
 
 @csrf_exempt
 def similar_pictures(request):
@@ -145,6 +171,7 @@ def similar_pictures(request):
     context['similar_list'] = similar_list
     return render_to_response('similar_pictures.html', {'similar_list': similar_list})
 
+
 def cal_similar(p1, p2):
     image1 = np.array(Image.open(p1).convert('L'))
     image2 = np.array(Image.open(p2.picture).convert('L'))   
@@ -152,6 +179,7 @@ def cal_similar(p1, p2):
     h2 = p_hash(image2)
     return hamming(h1, h2)
         
+
 def p_hash(src):        
     src = cv2.resize(src, (8, 8), cv2.INTER_LINEAR)
     avg = sum([sum(src[i]) for i in range(8)]) / 64
@@ -163,6 +191,7 @@ def p_hash(src):
         result += ''.join('%x' % int(string[i: i + 4], 2))
     return result
         
+
 def hamming(str1, str2):
     if len(str1) != len(str2): return
     count = 0
