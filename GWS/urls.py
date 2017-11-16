@@ -25,15 +25,16 @@ CACHE_TTL = getattr(settings, 'CACHE_TTL')
 urlpatterns = ([
     url(r'^admin/', include(admin.site.urls)),
     url(r'^cross/', include('cross.urls')),
-    # url(r'^compress/', cross.views.compressImage),i
+    # url(r'^compress/', cross.views.compressImage),
     url(r'^place_list/$', cache_page(CACHE_TTL)(cross.views.place_list.as_view())),
+    #url(r'^place_list/$', cross.views.place_list.as_view()),
     url(r'^picture_list/$', cache_page(CACHE_TTL)(cross.views.picture_list.as_view())),
     url(r'^add_place/$', cross.views.add_place.as_view()),
     url(r'^add_picture/$', cross.views.add_picture.as_view()),
-    url(r'^similar_pictures/$', cross.views.similar_pictures.as_view()),
+    url(r'^similar_pictures/$', cross.views.similar_pictures),
     url(r'^place_show/(?P<id>\d+)/$', cross.views.place_show.as_view()),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
-    url('^$',cross.views.home),
+    url('^$',cache_page(CACHE_TTL)(cross.views.home)),
 ]) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 

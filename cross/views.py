@@ -1,17 +1,12 @@
 from django.shortcuts import render_to_response
 from django.http.response import HttpResponse
-from django.views.generic.base import TemplateView, View
+from django.views.generic.base import TemplateView
 from . import models, serializers
 from rest_framework import viewsets, permissions
 from rest_framework.response import Response
+from django.views.decorators.csrf import csrf_exempt
 from PIL import Image
-import random
 import numpy as np
-
-#from django.conf import settings
-#from django.views.decorators.cache import cache_page
-
-#CACHE_TTL = getattr(settings, 'CACHE_TTL')
 
 
 
@@ -80,7 +75,6 @@ class place_list(TemplateView):
         return self.render_to_response(context)
 
 
-
 class picture_list(TemplateView):
     template_name = 'picture_list.html'
  
@@ -131,69 +125,51 @@ class add_picture(TemplateView):
         return self.render_to_response(context)
     
 
-    """
-    def get_context_data(self, **kwargs):        
-        context = {}
-        context['result'] = '200'
-        return context
-    """
+@csrf_exempt
+def similar_pictures(request):
+    picture = request.FILES.get("picture")
+    count = 0
+    num = 20
+    threshold = 12
+    similar_list = []
+    if picture:
+        picture_list = models.CrossPicture.objects.all()
+        for p in picture_list:
+            if p.picture:
+                similar = cal_similar(picture, p)
+                if similar < threshold:
+                    similar_list.append([p, similar])
+                    count += 1
+                if count >= num: break
+    context = {}
+    context['similar_list'] = similar_list
+    return render_to_response('similar_pictures.html', {'similar_list': similar_list})
 
-
-class similar_pictures(TemplateView):
-    template_name = 'similar_pictures.html'
-    
-    def get(self, request, *args, **kwargs):
-        # input_picture = request.FILES.get("picture")
-        # print(input_picture) 
-        input_picture = None
-        similar_list = []
-        if input_picture:      
-            picture_list = models.CrossPicture.objects.all()            
-            num = 0
-            th = 30 # threshold
-            for picture in picture_list:
-                if num >= 20:
-                    break
-                num += 1
-                similar = self.similar(input_picture, picture)
-                if similar < th :
-                    similar_list.append([picture, similar])
-        context = {}
-        context['similar_list'] = similar_list
-        return self.render_to_response(context)
-
-    def similar(self, input_picture, picture):
-        # return random.uniform(0, 100)
+def cal_similar(p1, p2):
+    image1 = np.array(Image.open(p1).convert('L'))
+    image2 = np.array(Image.open(p2.picture).convert('L'))   
+    h1 = p_hash(image1)
+    h2 = p_hash(image2)
+    return hamming(h1, h2)
         
-        image1 = np.array(Image.open(input_picture).convert('L'))
-        image2 = np.array(Image.open(picture.picture).convert('L'))
-        h1 = self.p_hash(mat1)
-        h2 = self.p_hash(mat2)
-        print(h1)
-        print(h2)
-        return self.hamming(h1, h2)
+def p_hash(src):        
+    src = cv2.resize(src, (8, 8), cv2.INTER_LINEAR)
+    avg = sum([sum(src[i]) for i in range(8)]) / 64
+    string = ''
+    for i in range(8):
+        string += ''.join(map(lambda i: '0' if i < avg else '1', src[i]))    
+    result = ''
+    for i in range(0, 64, 4):
+        result += ''.join('%x' % int(string[i: i + 4], 2))
+    return result
         
-
-    def p_hash(self, src):        
-        src.thumbnail((8,8), Image.ANTIALIAS)
-        avg = sum([sum(src[i]) for i in range(8)]) / 64
-        string = ''
-        for i in range(8):
-            string += ''.join(map(lambda i: '0' if i < avg else '1', src[i]))    
-        result = ''
-        for i in range(0, 64, 4):
-            result += ''.join('%x' % int(string[i: i + 4], 2))
-        return result
-        
-    def hamming(str1, str2):
-        if len(str1) != len(str2):
-            return
-        count = 0
-        for i in range(0, len(str1)):
-            if str1[i] != str2[i]:
-                count += 1
-        return count 
-
+def hamming(str1, str2):
+    if len(str1) != len(str2): return
+    count = 0
+    for i in range(0, len(str1)):
+        if str1[i] != str2[i]:
+            count += 1
+    return count 
 
 
 class place_show(TemplateView):
