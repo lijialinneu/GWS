@@ -41,7 +41,10 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'cross',
     'rest_framework',
+    'account',
 )
+
+
 
 MIDDLEWARE_CLASSES = (
     'django.contrib.sessions.middleware.SessionMiddleware',
@@ -150,7 +153,7 @@ CACHES = {
 }
 
 
-CACHE_TTL = 60 *15 # 15 minutes
+CACHE_TTL = 0 * 60 *15 # 15 minutes
 
 
 MIDDLEWARE = [

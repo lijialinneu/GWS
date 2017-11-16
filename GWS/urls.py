@@ -19,6 +19,7 @@ from django.contrib import admin
 from django.conf import settings
 from django.views.decorators.cache import cache_page
 import cross
+import account
 
 CACHE_TTL = getattr(settings, 'CACHE_TTL')
 
@@ -34,6 +35,7 @@ urlpatterns = ([
     url(r'^place_show/(?P<id>\d+)/$', cross.views.place_show.as_view(), name="place_show"),
     url(r'^api-auth/', include('rest_framework.urls', namespace='rest_framework')),
     url('^$',cache_page(CACHE_TTL)(cross.views.home), name="home"),
+    url('^account/$', include('account.urls', namespace='account'))
 ]) + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
 
