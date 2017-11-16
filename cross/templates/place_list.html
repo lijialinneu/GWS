@@ -7,6 +7,7 @@
 </style>
 
 <script type="text/javascript">
+
   function mapPanTo(id, index, name, picture) {
       var point = markers[index-1].getPosition();
       map.centerAndZoom(point, 18);
@@ -35,8 +36,12 @@
 {% block content %}
     <div class="container-fluid content">
 
-      {% include "nav_place_list.html" %}  
-
+      {% include "nav.html" %}  
+      <script type="text/javascript">    
+        $(document).ready(function(){
+          $("#nav_place_list").attr("class","active");
+        });
+      </script>
       <div class="row">
 
         <div class="col-md-8 col-md-push-4">

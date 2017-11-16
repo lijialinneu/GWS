@@ -22,14 +22,17 @@
     }
 </script>
 
-
 {% extends "base.html" %}
 
 {% block content %}
   <div class="container-fluid content">
 
-    {% include "nav_add_place.html" %}  
-  
+    {% include "nav.html" %}  
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $("#nav_add_place").attr("class", "active");
+      });
+    </script>
     <div class="row">
       <div class="col-md-6">
 	<form id="form" method="get" action="../add_place/">

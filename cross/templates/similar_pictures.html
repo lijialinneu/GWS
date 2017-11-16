@@ -9,13 +9,17 @@
 
 </script>
 
-
 {% extends "base.html" %}
 
 {% block content %}
   <div class="container-fluid content">
 
-    {% include "nav_similar_pictures.html" %}  
+    {% include "nav.html" %}  
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $("#nav_similar_pictures").attr("class", "active");
+      });
+    </script>
 
     <div class="row">
       <div class="alert alert-warning" role="alert"> 
