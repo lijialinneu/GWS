@@ -4,8 +4,13 @@
 {% block content %}
   <div class="container-fluid content">
 
-    {% include "nav_place_list.html" %}  
-  
+    {% include "nav.html" %}  
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $("#nav_place_list").attr("class", "active");
+      });
+    </script>
+    
     <div class="row">
        <center>  <h3> {{ place.name }}</h3> </center>
     </div>

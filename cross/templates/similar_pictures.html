@@ -6,7 +6,6 @@
             $("#form").submit();
         }
     }
-
 </script>
 
 {% extends "base.html" %}
@@ -46,7 +45,7 @@
           <center>
           <div class="caption">
               {% with image=p|first %}
-              <img width='400' height='300' src="http://www.dreamera.net:8080/media/{{image.picture}}"></img>
+              <img width='400' height='300' src="../media/{{image.picture}}"></img>
               <p>{{image}} 相似度:{{p|last}}</p>
               {% endwith %}
           </div>
