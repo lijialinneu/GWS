@@ -153,7 +153,7 @@ CACHES = {
 }
 
 
-CACHE_TTL = 0 * 60 *15 # 15 minutes
+CACHE_TTL = 60 *15 # 15 minutes
 
 
 MIDDLEWARE = [
