@@ -43,7 +43,7 @@ class CrossPictureViewSet(viewsets.ModelViewSet):
     permission_classes = [permissions.AllowAny]
 #     permission_classes = [IsAccountAdminOrReadOnly]
 
-
+"""
 def compressImage(request):
     picture_list = models.CrossPicture.objects.all()
     for cp in picture_list:
@@ -63,7 +63,7 @@ def compressImage(request):
         image.save('media/' + str(cp.picture), 'JPEG')
         cp.save()
     return HttpResponse('compress finish')
-
+"""
 
 class place_list(TemplateView):
     template_name = 'place_list.html'
