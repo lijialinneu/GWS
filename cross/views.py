@@ -7,7 +7,7 @@ from rest_framework.response import Response
 from django.views.decorators.csrf import csrf_exempt
 from PIL import Image
 import numpy as np
-
+import cv2
 from django.views.decorators.cache import cache_page
 #from django.conf import settings
 
@@ -151,6 +151,17 @@ class add_picture(TemplateView):
             return self.render_to_response(context) 
  
 
+class laboratory(TemplateView):
+
+    template_name = 'laboratory.html'
+    """
+    def get_context_data(self, **kwargs):
+        context = {}
+        return self.render_to_response(context)
+    """
+
+
+
 @csrf_exempt
 def similar_pictures(request):
     picture = request.FILES.get("picture")
@@ -169,7 +180,7 @@ def similar_pictures(request):
                 if count >= num: break
     context = {}
     context['similar_list'] = similar_list
-    return render_to_response('similar_pictures.html', {'similar_list': similar_list})
+    return render_to_response('laboratory.html', {'similar_list': similar_list})
 
 
 def cal_similar(p1, p2):
