@@ -1,0 +1,89 @@
+<script type="text/javascript">
+    function search() {
+        if(!$("#picture").val()) {
+            alert("未选择图片");
+        }else {
+            $("#form").submit();
+        }
+    }
+</script>
+
+{% extends "base.html" %}
+
+{% block content %}
+  <div class="container-fluid content">
+
+    {% include "nav.html" %}  
+    <script type="text/javascript">
+      $(document).ready(function () {
+        $("#nav_similar_pictures").attr("class", "active");
+      });
+    </script>
+
+    <div class="row">
+      <div class="alert alert-success" role="alert"> 
+         <center>实验1：以图搜图,找到相似的图片</center>
+      </div>
+      <div class="col-md-2"></div>
+      <div class="col-md-8">
+
+	<form id="form" method="post" action="../similar_pictures/" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="picture">Input Picture</label>
+            <input type="file" id="picture" accept="image/*" name="picture">
+          </div>
+          <button type="submit" class="btn btn-default" onclick="search()">Submit</button>
+        </form>
+      </div>
+        
+      <div class="col-md-2"></div>
+    </div>
+
+    <div class="row">
+      {% for p in similar_list %}
+        <div class="col-sm-8 col-md-4 col-ld-3">
+          <center>
+          <div class="caption">
+              {% with image=p|first %}
+              <img width='400' height='300' src="../media/{{image.picture}}"></img>
+              <p>{{image}} 相似度:{{p|last}}</p>
+              {% endwith %}
+          </div>
+          </center>
+        </div>         
+      {% empty %}
+      <center><p>暂时没有数据哦</p> </center>
+      {% endfor %}   
+    </div>
+
+    <div class="row">
+      <div class="alert alert-success" role="alert"> 
+         <center>实验2：仿照Prisma转换图片风格(没做呢)</center>
+      </div>
+      <div class="col-md-2"></div>
+      <div class="col-md-8">
+
+	<form id="form2" method="post" action="" enctype="multipart/form-data">
+          <div class="form-group">
+            <label for="picture">Input Picture</label>
+            <input type="file" id="picture2" accept="image/*" name="picture2">
+          </div>
+          <button type="submit" class="btn btn-default" onclick="">Submit</button>
+        </form>
+      </div>
+        
+      <div class="col-md-2"></div>
+    </div>
+
+    <div class="row">
+        <div class="col-sm-8 col-md-4 col-ld-3">
+        </div>         
+    </div>
+
+  </div>
+
+{% endblock %}
+
+
+
+
