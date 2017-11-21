@@ -28,6 +28,7 @@
           $("#form").submit();
       }
   }
+
 </script>
 
 {% extends "base.html" %}
@@ -52,9 +53,25 @@
          <div class="panel panel-info"> 
            <div class="panel-heading">热门城市</div> 
            <div class="panel-body">
-             <a href="#">沈阳</a>、<a href="#">南京</a>、<a href="#">北京</a>... 
+             <a class="city" href="#">沈阳</a>、
+             <a class="city" href="#">南京</a>、
+             <a class="city" href="#">北京</a>、 
+             <a class="city" href="#">葫芦岛</a>、
+             <a class="city" href="#">大同</a>...
            </div>
          </div> 
+
+         <script type="text/javascript">
+          
+           $(document).ready(function(){
+             $(".city").click(function(){
+                 var city = $(this).text();
+                 if(city != "") {
+                   map.centerAndZoom(city, 12);
+                 }
+             });
+          });
+         </script>
 
 
           <form id="form" method="get" action="../place_list/">
