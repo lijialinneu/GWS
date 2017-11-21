@@ -10,7 +10,7 @@
 
   function mapPanTo(id, index, name, picture) {
       var point = markers[index-1].getPosition();
-      map.centerAndZoom(point, 18);
+      map.centerAndZoom(point, 12);
       sContent="<div><h4>" + name + "</h4>" + 
           "<img style='float:right, margin:4px' width='139' height='104' src="+ picture_url + picture +" '>" +
           "<p><a href='../place_show/" + id + "/' target='_blank'>查看更多</a></p></div>";
